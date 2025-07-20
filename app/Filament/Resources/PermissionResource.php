@@ -79,8 +79,6 @@ class PermissionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->visible(fn (): bool => auth()->user()->can('view_permissions')),
                 Tables\Actions\EditAction::make()
                     ->visible(fn (): bool => auth()->user()->can('edit_permissions')),
                 Tables\Actions\DeleteAction::make()
@@ -88,7 +86,7 @@ class PermissionResource extends Resource
                     ->requiresConfirmation()
                     ->modalHeading('Delete Permission')
                     ->modalDescription('Are you sure you want to delete this permission? This action cannot be undone.')
-                    ->modalSubmitActionLabel('Yes, delete it'),
+                    ->modalSubmitActionLabel('Yes, delete it')
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()

@@ -4,45 +4,40 @@ namespace App\Models;
 
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable as BaseTranslatable;
+use Illuminate\Database\Eloquent\Model;
 
 trait Translatable
 {
     use BaseTranslatable;
 
     /**
-     * Get the translation for the current locale.
-     *
-     * @param  string|null  $locale
-     * @return \Illuminate\Database\Eloquent\Model|null
+     * @param $locale
+     * @return Model|null
      */
-    public function translateOrDefault($locale = null)
+    public function translateOrDefault($locale = null): ?Model
     {
         $translation = $this->translate($locale);
-        
+
         if (!$translation) {
             $translation = $this->translate(config('app.fallback_locale'));
         }
-        
+
         return $translation;
     }
 
     /**
-     * Get the name attribute with fallback.
-     *
-     * @return string
+     * @return mixed|string
      */
-    public function getNameAttribute()
+    public function getNameAttribute(): mixed
     {
         $translation = $this->translateOrDefault();
         return $translation ? $translation->name : '';
     }
 
     /**
-     * Get the description attribute with fallback.
-     *
-     * @return string
+     * @return mixed|string
      */
-    public function getDescriptionAttribute()
+    public function getDescriptionAttribute(): mixed
     {
         $translation = $this->translateOrDefault();
         return $translation ? $translation->description : '';

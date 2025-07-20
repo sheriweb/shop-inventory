@@ -4,12 +4,11 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -32,18 +31,40 @@ class User extends Authenticatable
         'permissions'
     ];
 
+    /**
+     * @var string[]
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'is_customer' => 'boolean',
+        'permissions' => 'array',
+        'role_id' => 'integer',
+    ];
+
+    /**
+     * @var string[]
+     */
     protected $appends = ['all_permissions', 'can'];
 
     /**
-     * Get the user's roles.
+     * @return BelongsToMany
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class)->withTimestamps();
     }
 
     /**
-     * Check if the user has a specific role.
+     * @param $role
+     * @return bool
      */
     public function hasRole($role): bool
     {
@@ -73,9 +94,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Get all permissions for the user.
+     * @return array|mixed
      */
-    public function getAllPermissionsAttribute()
+    public function getAllPermissionsAttribute(): mixed
     {
         $permissions = $this->permissions ?? [];
 
@@ -90,10 +111,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if the user has a specific permission.
-     */
-    /**
-     * Check if the user is an admin.
+     * @return bool
      */
     public function isAdmin(): bool
     {
@@ -101,13 +119,17 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if the user has a specific permission.
+     * @return BelongsToMany
      */
-    public function permissions(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class);
     }
 
+    /**
+     * @param $permission
+     * @return bool
+     */
     public function hasPermission($permission): bool
     {
         // Check if user has admin role
@@ -140,7 +162,7 @@ class User extends Authenticatable
             $hasPermission = $this->roles()->whereHas('permissions', function($q) use ($permission) {
                 $q->where('name', $permission);
             })->exists();
-            
+
             if ($hasPermission) {
                 return true;
             }
@@ -150,9 +172,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the can attribute for frontend use.
+     * @return array
      */
-    public function getCanAttribute()
+    public function getCanAttribute(): array
     {
         $permissions = [];
 
@@ -164,42 +186,14 @@ class User extends Authenticatable
     }
 
     /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'is_customer' => 'boolean',
-        'permissions' => 'array',
-        'role_id' => 'integer',
-    ];
-
-
-
-    /**
-     * Get the sales made by the user.
+     * @return HasMany
      */
     public function sales(): HasMany
     {
         return $this->hasMany(Sale::class, 'customer_id');
     }
 
-
-
     /**
-     * Check if the user is a customer.
-     *
      * @return bool
      */
     public function isCustomer(): bool
@@ -208,9 +202,8 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if the user has a specific permission.
-     *
-     * @param string $permission
+     * @param $permission
+     * @param $arguments
      * @return bool
      */
     public function can($permission, $arguments = []): bool
@@ -223,13 +216,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Determine if the user has any of the given abilities.
-     *
-     * @param  array|string  $abilities
-     * @param  array|mixed  $arguments
+     * @param $abilities
+     * @param $arguments
      * @return bool
      */
-    public function canAny($abilities, $arguments = [])
+    public function canAny($abilities, $arguments = []): bool
     {
         if ($this->isAdmin()) {
             return true;
@@ -247,18 +238,10 @@ class User extends Authenticatable
     }
 
     /**
-     * Scope a query to only include admins.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param $query
+     * @return mixed
      */
-    /**
-     * Scope a query to only include admin users.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeAdmins($query)
+    public function scopeAdmins($query): mixed
     {
         return $query->whereHas('roles', function($q) {
             $q->where('name', 'admin');
@@ -266,12 +249,10 @@ class User extends Authenticatable
     }
 
     /**
-     * Scope a query to only include customers.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param $query
+     * @return mixed
      */
-    public function scopeCustomers($query)
+    public function scopeCustomers($query): mixed
     {
         return $query->where('is_customer', true);
     }

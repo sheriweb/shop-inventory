@@ -169,12 +169,10 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->visible(fn (): bool => auth()->user()->can('view_categories')),
                 Tables\Actions\EditAction::make()
                     ->visible(fn (): bool => auth()->user()->can('edit_categories')),
                 Tables\Actions\DeleteAction::make()
-                    ->visible(fn (): bool => auth()->user()->can('delete_categories')),
+                    ->visible(fn (): bool => auth()->user()->can('delete_categories'))
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make()

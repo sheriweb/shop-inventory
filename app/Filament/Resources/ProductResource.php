@@ -295,29 +295,16 @@ class ProductResource extends Resource
                     ),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()
-                    ->visible(fn (): bool => auth()->user()->can('view_products')),
                 Tables\Actions\EditAction::make()
                     ->visible(fn (): bool => auth()->user()->can('edit_products')),
                 Tables\Actions\DeleteAction::make()
-                    ->visible(fn (): bool => auth()->user()->can('delete_products')),
-            ])
-            ->headerActions([
-                Tables\Actions\CreateAction::make()
-                    ->visible(fn (): bool => auth()->user()->can('create_products')),
+                    ->visible(fn (): bool => auth()->user()->can('delete_products'))
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array

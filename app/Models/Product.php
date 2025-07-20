@@ -182,28 +182,43 @@ class Product extends Model implements TranslatableContract
         return 'Rs. ' . number_format($this->price, 0);
     }
 
-    public function setPriceAttribute($value)
+    /**
+     * @param $value
+     * @return void
+     */
+    public function setPriceAttribute($value): void
     {
         $this->attributes['price'] = (float) $value;
     }
 
-    public function setCostPriceAttribute($value)
+    /**
+     * @param $value
+     * @return void
+     */
+    public function setCostPriceAttribute($value): void
     {
         $this->attributes['cost_price'] = $value ? (float) $value : null;
     }
 
-    public function getFormattedCostPriceAttribute()
+    /**
+     * @return string|null
+     */
+    public function getFormattedCostPriceAttribute(): ?string
     {
         return $this->cost_price ? 'Rs. ' . number_format($this->cost_price, 0) : null;
     }
 
-    // Relationships
-
+    /**
+     * @return BelongsTo
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * @return HasMany
+     */
     public function saleItems(): HasMany
     {
         return $this->hasMany(SaleItem::class);
@@ -242,6 +257,13 @@ class Product extends Model implements TranslatableContract
         }, $direction);
     }
 
+    /**
+     * @param float $quantity
+     * @param string $unitType
+     * @param string $operation
+     * @return void
+     * @throws \Exception
+     */
     public function updateStock(float $quantity, string $unitType, string $operation = 'decrease'): void
     {
         // Validate unit type

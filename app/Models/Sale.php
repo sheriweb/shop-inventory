@@ -9,6 +9,9 @@ use Illuminate\Support\Str;
 
 class Sale extends Model
 {
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'user_id',
         'customer_id',
@@ -23,6 +26,9 @@ class Sale extends Model
         'status'
     ];
 
+    /**
+     * @var string[]
+     */
     protected $casts = [
         'subtotal' => 'decimal:2',
         'tax_amount' => 'decimal:2',
@@ -34,6 +40,9 @@ class Sale extends Model
         'updated_at' => 'datetime',
     ];
 
+    /**
+     * @return void
+     */
     protected static function boot()
     {
         parent::boot();
