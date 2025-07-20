@@ -1,25 +1,130 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Shahzaid Shop Inventory
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Laravel](https://img.shields.io/badge/laravel-%23FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white)
+![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-## About Laravel
+A comprehensive Shop Inventory Management System built with Laravel and Filament PHP. This application helps manage products, categories, suppliers, and inventory with multi-language support.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- 🛍️ Product Management
+- 📦 Category Management
+- 👥 User Roles & Permissions
+- 🌐 Multi-language Support (English/Urdu)
+- 📊 Stock Management
+- 📈 Sales Tracking
+- 📱 Responsive Admin Panel
+- 🔐 Secure Authentication
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Prerequisites
+
+- PHP 8.1 or higher
+- Composer
+- MySQL 5.7+ or MariaDB 10.3+
+- Node.js & NPM
+
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/shop-inventory.git
+   cd shop-inventory
+   ```
+
+2. **Install PHP Dependencies**
+   ```bash
+   composer install
+   ```
+
+3. **Install NPM Dependencies**
+   ```bash
+   npm install
+   npm run build
+   ```
+
+4. **Setup Environment**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+5. **Configure Database**
+   Update your `.env` file with your database credentials:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=shop_inventory
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+   ```
+
+6. **Run Migrations & Seeders**
+   ```bash
+   php artisan migrate --seed
+   ```
+
+7. **Create Storage Link**
+   ```bash
+   php artisan storage:link
+   ```
+
+8. **Start Development Server**
+   ```bash
+   php artisan serve
+   ```
+
+9. **Access Admin Panel**
+   - URL: http://localhost:8000/admin
+   - Email: admin@example.com
+   - Password: password
+
+## Development
+
+### Running Tests
+```bash
+php artisan test
+```
+
+### Generating Assets
+```bash
+npm run dev
+# or for production
+npm run build
+```
+
+### Clearing Cache
+```bash
+php artisan optimize:clear
+```
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `APP_ENV` | Application environment (local, production) |
+| `APP_DEBUG` | Enable/Disable debug mode |
+| `APP_URL` | Application URL |
+| `DB_*` | Database connection settings |
+| `MAIL_*` | Email configuration |
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Support
+
+For support, email support@shahzaidshop.com or open an issue in the repository.
 
 ## Learning Laravel
 
