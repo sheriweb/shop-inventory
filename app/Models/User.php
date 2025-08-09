@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Filament\Models\Contracts\FilamentUser;
+
 
 class User extends Authenticatable
 {
@@ -255,5 +257,10 @@ class User extends Authenticatable
     public function scopeCustomers($query): mixed
     {
         return $query->where('is_customer', true);
+    }
+    
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
     }
 }
