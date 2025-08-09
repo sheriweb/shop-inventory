@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;  
 
 
 class User extends Authenticatable implements FilamentUser
