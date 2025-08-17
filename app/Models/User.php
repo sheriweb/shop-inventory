@@ -10,9 +10,12 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;  
+use Filament\Panel;
 
-
+/**
+ * Class User
+ * @package App\Models
+ */
 class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -259,7 +262,7 @@ class User extends Authenticatable implements FilamentUser
     {
         return $query->where('is_customer', true);
     }
-    
+
     public function canAccessPanel(Panel $panel): bool
     {
         return true;
